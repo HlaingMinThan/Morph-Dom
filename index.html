@@ -7,13 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    <p>hello</p>
+    <h1>hello</h1>
     <p>hey</p>
 
     <button onclick="morph(document.body.children[0],document.body.children[1])"> morph </button>
     <script>    
     
         function morph(el1,el2){
+            if(el1.tagName !== el2.tagName){
+                //copy el2 node and replace with el1
+                el1.replaceWith(el2.cloneNode(true));
+                return;
+            }
             patchText(el1,el2)
         }
 
