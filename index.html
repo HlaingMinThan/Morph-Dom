@@ -22,6 +22,12 @@
     <script>    
     
         function morph(el1,el2){
+            //create element
+            if(typeof el2==='string'){
+                let el=document.createElement('div');
+                el.innerHTML=el2;
+                el2=el.firstElementChild;
+            }
             if(el1.tagName !== el2.tagName){
                 //copy el2 node and replace with el1
                 el1.replaceWith(el2.cloneNode(true));
