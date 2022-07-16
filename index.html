@@ -7,8 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    <input type="text" disabled="disabled">
-    <input type="date">
+    <ul>
+        <li>1</li>
+        <li>2</li>
+    </ul>
+
+    <ul>
+        <li>2</li>
+        <li>3</li>
+        <li>3</li>
+    </ul>
 
     <button onclick="morph(document.body.children[0],document.body.children[1])"> morph </button>
     <script>    
@@ -21,7 +29,29 @@
             }
             patchText(el1,el2)
             patchAttributes(el1,el2)
+            patchChildren(el1,el2)
         }
+
+        function patchChildren(el1,el2){
+            let from = el1.firstElementChild;
+            let to = el2.firstElementChild;
+            while(to){
+                if(!from){
+                   from= el1.appendChild(to.cloneNode(true))
+                }else{
+                    morph(from,to);
+                }
+                to=to.nextElementSibling;
+                from=from.nextElementSibling;
+            }
+
+            while(from){
+                let toRemove=from;
+                from = from.nextElementSibling;
+                toRemove.remove();
+            }
+        }
+
 
         function patchAttributes(el1,el2){
             
@@ -39,6 +69,7 @@
         }
 
         function patchText(el1,el2){
+            if(el2.children.length) return //if update element have children ,return and exit out (edge case)
             el1.textContent=el2.textContent;
         }
     </script>
